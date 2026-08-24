@@ -11,10 +11,25 @@ export type Match = {
   createdAt: string;
 };
 
+export type BadgeIcon =
+  | "crown"
+  | "code"
+  | "shield"
+  | "sparkles"
+  | "star"
+  | "heart"
+  | "flame"
+  | "zap"
+  | "gem"
+  | "trophy";
+
 export type Badge = {
   id: string;
   label: string;
-  tone: "vip" | "dev" | "admin" | "pink" | "purple" | "default";
+  tone: "vip" | "dev" | "admin" | "pink" | "purple" | "default" | "custom";
+  // Только для tone === "custom": цвет и иконка, выданные через админ-панель.
+  color?: string | null;
+  icon?: BadgeIcon | string | null;
 };
 
 export type Profile = {
