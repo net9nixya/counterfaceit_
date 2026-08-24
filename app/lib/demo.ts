@@ -10,6 +10,7 @@ export const demoProfile: Profile = {
     { id: "dev", label: "Developer", tone: "dev" },
     { id: "admin", label: "Admin", tone: "admin" },
     { id: "femboy", label: "Фембой", tone: "pink" },
+    { id: "custom", label: "Developer", tone: "custom", color: "#4fd1e8", icon: "code" },
   ],
   elo: 200,
   wins: 0,
@@ -98,7 +99,13 @@ export const demoProfile: Profile = {
   ],
 };
 
-export type TopEntry = { nickname: string; value: string; verified: boolean };
+export type TopEntry = {
+  nickname: string;
+  value: string;
+  verified: boolean;
+  // Кастомный бейдж, выданный через админ-панель бота (если есть).
+  badge?: { label: string; color: string; icon: string | null } | null;
+};
 export type TopBoard = { id: string; label: string; entries: TopEntry[] };
 
 export const topBoards: TopBoard[] = [
