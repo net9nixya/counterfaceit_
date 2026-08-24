@@ -14,7 +14,10 @@ export async function GET(req: NextRequest) {
       },
       cache: "no-store",
     });
-    if (!r.ok) return NextResponse.json({ error: "Profile API error" }, { status: 502 });
+    if (!r.ok) {
+      const detail = await r.text().catch(() => "");
+      return NextResponse.json({ error: "Profile API error", upstreamStatus: r.status, detail }, { status: r.status });
+    }
     return NextResponse.json(await r.json());
   }
 
