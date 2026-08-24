@@ -1,9 +1,24 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ShieldCheck } from "lucide-react";
+import { ShieldCheck, Crown, Code2, Shield, Sparkles, Star, Heart, Flame, Zap, Gem, Trophy } from "lucide-react";
 import { getTelegramInitData } from "../lib/telegram";
 import { topBoards as demoTopBoards, TopBoard } from "../lib/demo";
+
+// Тот же набор иконок кастомных бейджей, что и в ProfileScreen — ключи
+// приходят из БД бота (admin.py → BADGE_ICON_PRESETS).
+const BADGE_ICONS: Record<string, React.ComponentType<{ size?: number }>> = {
+  crown: Crown,
+  code: Code2,
+  shield: Shield,
+  sparkles: Sparkles,
+  star: Star,
+  heart: Heart,
+  flame: Flame,
+  zap: Zap,
+  gem: Gem,
+  trophy: Trophy,
+};
 
 const BOARD_TABS: { id: string; label: string }[] = [
   { id: "elo", label: "По Эло" },
@@ -75,6 +90,7 @@ export default function TopScreen({
                 <span className={`top-name ${isSelf ? "self" : ""}`}>
                   {entry.nickname}
                   {entry.verified && <ShieldCheck size={13} style={{ flexShrink: 0, color: "var(--accent)" }} />}
+                  {entry.badge && <TopBadge badge={entry.badge} />}
                 </span>
                 <span className="top-value tabular">{entry.value}</span>
               </button>
@@ -87,5 +103,33 @@ export default function TopScreen({
         Нажми на игрока, чтобы открыть его профиль
       </div>
     </>
+  );
+}
+
+function hexWithAlpha(hex: string, alpha: number): string {
+  let h = hex.replace("#", "");
+  if (h.length === 3) h = h.split("").map((c) => c + c).join("");
+  const r = parseInt(h.slice(0, 2), 16) || 0;
+  const g = parseInt(h.slice(2, 4), 16) || 0;
+  const b = parseInt(h.slice(4, 6), 16) || 0;
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
+
+function TopBadge({ badge }: { badge: { label: string; color: string; icon: string | null } }) {
+  const Icon = badge.icon ? BADGE_ICONS[badge.icon] : null;
+  return (
+    <span
+      className="badge"
+      style={{
+        flexShrink: 0,
+        background: hexWithAlpha(badge.color, 0.14),
+        color: badge.color,
+        borderColor: hexWithAlpha(badge.color, 0.3),
+      }}
+      title={badge.label}
+    >
+      {Icon ? <Icon size={11} /> : null}
+      {badge.label}
+    </span>
   );
 }
