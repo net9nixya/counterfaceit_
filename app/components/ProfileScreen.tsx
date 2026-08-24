@@ -166,7 +166,7 @@ export default function ProfileScreen({ profile }: { profile: Profile }) {
             ))}
           </div>
         ) : (
-          <span className="empty-hint">Медалей пока нет — сыграй рейтинговый матч, чтобы начать зарабатывать награды.</span>
+          <span className="empty-hint">Медалей пока нет.</span>
         )}
       </section>
 
@@ -203,7 +203,7 @@ export default function ProfileScreen({ profile }: { profile: Profile }) {
       </section>
 
       <div className="footer reveal" style={{ animationDelay: "0.58s" }}>
-        Counter Faceit · Mini App
+        Counter Faceit
       </div>
     </>
   );
