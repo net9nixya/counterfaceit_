@@ -11,7 +11,7 @@ export default function PlayScreen() {
           <Play size={24} />
         </div>
         <div className="placeholder-title">Поиск матча скоро будет здесь</div>
-        <p className="placeholder-sub">Как только подключим бота — здесь появится очередь на поиск игры, выбор режима и таймер подтверждения.</p>
+        <p className="placeholder-sub">.</p>
       </section>
     </>
   );
