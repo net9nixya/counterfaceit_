@@ -19,13 +19,14 @@ import {
   Shield,
   Zap,
   Gem,
+  type LucideIcon,
 } from "lucide-react";
 import type { Profile, Badge } from "../lib/types";
 
 // Иконки для кастомных бейджей, выданных через админ-панель бота — ключ
 // должен совпадать с тем, что бот кладёт в поле `icon` (см. BADGE_ICON_PRESETS
 // в admin.py). Неизвестный/отсутствующий ключ — бейдж без иконки.
-const CUSTOM_BADGE_ICONS: Record<string, React.ComponentType<{ size?: number }>> = {
+const CUSTOM_BADGE_ICONS: Record<string, LucideIcon> = {
   crown: Crown,
   code: Code2,
   shield: Shield,
