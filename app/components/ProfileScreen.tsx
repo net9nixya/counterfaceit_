@@ -16,8 +16,38 @@ import {
   Heart,
   Star,
   Sparkles,
+  Shield,
+  Zap,
+  Gem,
 } from "lucide-react";
 import type { Profile, Badge } from "../lib/types";
+
+// Иконки для кастомных бейджей, выданных через админ-панель бота — ключ
+// должен совпадать с тем, что бот кладёт в поле `icon` (см. BADGE_ICON_PRESETS
+// в admin.py). Неизвестный/отсутствующий ключ — бейдж без иконки.
+const CUSTOM_BADGE_ICONS: Record<string, React.ComponentType<{ size?: number }>> = {
+  crown: Crown,
+  code: Code2,
+  shield: Shield,
+  sparkles: Sparkles,
+  star: Star,
+  heart: Heart,
+  flame: Flame,
+  zap: Zap,
+  gem: Gem,
+  trophy: Trophy,
+};
+
+// "#rrggbb" -> "rgba(r,g,b,alpha)", чтобы делать полупрозрачный фон/рамку
+// под любой цвет, который выберет админ (как у встроенных .badge-* классов).
+function hexWithAlpha(hex: string, alpha: number): string {
+  let h = hex.replace("#", "");
+  if (h.length === 3) h = h.split("").map((c) => c + c).join("");
+  const r = parseInt(h.slice(0, 2), 16) || 0;
+  const g = parseInt(h.slice(2, 4), 16) || 0;
+  const b = parseInt(h.slice(4, 6), 16) || 0;
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
 
 export default function ProfileScreen({ profile }: { profile: Profile }) {
   const x = profile;
@@ -222,6 +252,25 @@ function Stat({ icon, value, label, delay }: { icon: React.ReactNode; value: Rea
 }
 
 function BadgePill({ badge, delay }: { badge: Badge; delay: number }) {
+  if (badge.tone === "custom") {
+    const color = badge.color || "#ffffff";
+    const Icon = badge.icon ? CUSTOM_BADGE_ICONS[badge.icon] : null;
+    return (
+      <span
+        className="badge"
+        style={{
+          animationDelay: `${delay}s`,
+          background: hexWithAlpha(color, 0.14),
+          color,
+          borderColor: hexWithAlpha(color, 0.3),
+        }}
+      >
+        {Icon && <Icon size={12} />}
+        {badge.label}
+      </span>
+    );
+  }
+
   const icon =
     badge.tone === "vip" ? <Crown size={12} /> :
     badge.tone === "dev" ? <Code2 size={12} /> :
