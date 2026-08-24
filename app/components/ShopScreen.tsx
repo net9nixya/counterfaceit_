@@ -40,7 +40,7 @@ export default function ShopScreen() {
       ))}
 
       <div className="footer reveal" style={{ animationDelay: "0.2s" }}>
-        Покупка — заглушка, скоро подключим оплату
+        test
       </div>
     </>
   );
