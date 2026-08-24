@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ShieldCheck, Crown, Code2, Shield, Sparkles, Star, Heart, Flame, Zap, Gem, Trophy } from "lucide-react";
+import { ShieldCheck, Crown, Code2, Shield, Sparkles, Star, Heart, Flame, Zap, Gem, Trophy, type LucideIcon } from "lucide-react";
 import { getTelegramInitData } from "../lib/telegram";
 import { topBoards as demoTopBoards, TopBoard } from "../lib/demo";
 
 // Тот же набор иконок кастомных бейджей, что и в ProfileScreen — ключи
 // приходят из БД бота (admin.py → BADGE_ICON_PRESETS).
-const BADGE_ICONS: Record<string, React.ComponentType<{ size?: number }>> = {
+const BADGE_ICONS: Record<string, LucideIcon> = {
   crown: Crown,
   code: Code2,
   shield: Shield,
