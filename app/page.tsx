@@ -31,11 +31,15 @@ export default function Home() {
     tg?.expand();
 
     fetch("/api/profile", { headers: { "X-Telegram-Init-Data": getTelegramInitData() } })
-      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then(async (r) => {
+        if (r.ok) return r.json();
+        const body = await r.text().catch(() => "");
+        throw new Error(`HTTP ${r.status}: ${body}`);
+      })
       .then(setP)
-      .catch(() => {
+      .catch((e) => {
         setP(demoProfile);
-        setError("API профиля ещё не подключён — показан демо-профиль.");
+        setError(`Демо-профиль (ошибка API: ${e.message || e})`);
       })
       .finally(() => setLoading(false));
   }, []);
