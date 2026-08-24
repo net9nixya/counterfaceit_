@@ -252,7 +252,7 @@ function Stat({ icon, value, label, delay }: { icon: React.ReactNode; value: Rea
 }
 
 function BadgePill({ badge, delay }: { badge: Badge; delay: number }) {
-  if (badge.tone === "custom") {
+  if (badge.tone === "custom" || badge.color) {
     const color = badge.color || "#ffffff";
     const Icon = badge.icon ? CUSTOM_BADGE_ICONS[badge.icon] : null;
     return (
